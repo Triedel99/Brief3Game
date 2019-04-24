@@ -16,6 +16,8 @@ public class BowlingLaneBehaviour : MonoBehaviour
     public GameObject bowlingBall;
     public Transform[] pinSpawnLocations;
     public Transform defaultBallLocation;
+
+    public List<GameObject> PinCount;
     //TODO; we need a way of tracking the pins that are used for scoring and so we can clean them up
 
 
@@ -23,12 +25,13 @@ public class BowlingLaneBehaviour : MonoBehaviour
     public void InitialiseRound()
     {
         //TODO; need to move or init or create pins for a round of bowling, most likely to include some of the following;
-        /*
+
         foreach (var pinLoc in pinSpawnLocations)
         {
-            var newPin = Instantiate(pinPrefab, pinLoc.position, pinLoc.rotation);
+            GameObject newPin = Instantiate(pinPrefab, pinLoc.position, pinLoc.rotation);
+            PinCount.Add(newPin);
         }
-        */
+
     }
 
     public void BallReachedEnd()

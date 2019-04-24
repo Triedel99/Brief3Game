@@ -7,6 +7,10 @@ TagManager:
   - Ball
   - NerfDart
   - BowlingBall
+  - CanHoldUp
+  - nerfgun
+  - Gun
+  - DragonCenter
   layers:
   - Default
   - TransparentFX
@@ -20,9 +24,9 @@ TagManager:
   - Player
   - Items
   - NoPlayerInteraction
-  - 
-  - 
-  - 
+  - coin
+  - dragon
+  - Wolf
   - 
   - 
   - 
