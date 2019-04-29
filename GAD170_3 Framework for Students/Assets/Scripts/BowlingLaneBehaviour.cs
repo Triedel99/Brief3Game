@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 /// <summary>
 /// Simple bowling lane logic, is triggered externally by buttons that are routed
 /// to the InitialiseRound, TalleyScore and ResetRack.
@@ -18,17 +19,16 @@ public class BowlingLaneBehaviour : MonoBehaviour
     public Transform defaultBallLocation;
 
     public List<GameObject> PinCount;
-    //TODO; we need a way of tracking the pins that are used for scoring and so we can clean them up
 
 
     [ContextMenu("InitialiseRound")]
     public void InitialiseRound()
     {
-        //TODO; need to move or init or create pins for a round of bowling, most likely to include some of the following;
-
+        ResetRack();
+        //Spawn pins in pin location
         foreach (var pinLoc in pinSpawnLocations)
         {
-            GameObject newPin = Instantiate(pinPrefab, pinLoc.position, pinLoc.rotation);
+            GameObject newPin = Instantiate(pinPrefab, pinLoc.position, Quaternion.identity);
             PinCount.Add(newPin);
         }
 
@@ -36,19 +36,36 @@ public class BowlingLaneBehaviour : MonoBehaviour
 
     public void BallReachedEnd()
     {
-        //TODO; this needs to return the ball to the ball feed so the player could bowl again or at least clean ups
+        //ball collides with end of bowling lane
+        bowlingBall.transform.position = defaultBallLocation.position;
+
     }
 
     [ContextMenu("TalleyScore")]
     public void TalleyScore()
     {
-      //TODO; determine score and get that information out to a checklist item, either via event or directly
+        //every not in spawned rotation counts as a pin down
+        foreach (GameObject T in PinCount)
+        {
+            if (T.transform.rotation.eulerAngles != Vector3.zero)
+            {
+                BowlingTask.UpdatePins?.Invoke(1);
+            }
+        }
+
     }
 
     [ContextMenu("ResetRack")]
     public void ResetRack()
     {
-        //TODO; clean up all objects created by the bowling lane, preparing for a new round of bowling to occur
+        //every pin is destory and removed from pin list
+        for (int T = 0; T < PinCount.Count; T++)
+        {
+            Destroy(PinCount[T]);
+            PinCount.Remove(PinCount[T]);
+            T--;
+        }
+        BallReachedEnd();
     }
 
     protected void Update()

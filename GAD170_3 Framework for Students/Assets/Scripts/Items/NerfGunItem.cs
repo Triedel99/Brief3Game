@@ -30,11 +30,11 @@ public class NerfGunItem : InteractiveItem
 
     public void FireNow()
     {
-        //TODO: this is where we would actually create the thing and get it on its way
+        //creating a new bullet
         GameObject BulletClone = Instantiate(nerfDartPrefab, nerfDartSpawnLocation.position, Quaternion.identity);
         myNerfBulletCount.Add(BulletClone);
         Invoke("CleanUpBullets", 5);
-
+        //giving bullet a launch force
         BulletClone.GetComponent<Rigidbody>().AddForce(transform.forward * launchForce);
 
     }
@@ -43,6 +43,7 @@ public class NerfGunItem : InteractiveItem
     {
         if (myNerfBulletCount.Count > 5)
         {
+            //destroying bullets from list at index 0
             Destroy(myNerfBulletCount[0]);
             myNerfBulletCount.RemoveAt(0);
         }
